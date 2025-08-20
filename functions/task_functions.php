@@ -24,7 +24,7 @@
   }
 
   function createTask($pdo, $title, $description, $status, $priority, $due_date, $category_id) {
-    $sql = "INSERT INTO tasks (title, description, status, priority, due_date, category_id VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO tasks (title, description, status, priority, due_date, category_id) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([
         $title,
@@ -40,6 +40,13 @@
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([$status, $id]);
   }
+
+  function updateTaskStatus($pdo, $id, $status) {
+    $sql = "UPDATE tasks SET status = ? WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$status, $id]);
+}
+
   function deleteTask($pdo, $id) {
     $sql = "DELETE FROM tasks WHERE id = ?";
     $stmt = $pdo->prepare($sql);
@@ -66,7 +73,7 @@
 
   function getAllCategories($pdo) {
     $sql = "SELECT * FROM categories ORDER BY name";
-    $stmt->prepare($sql);
+    $stmt = $pdo->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll();
   }
