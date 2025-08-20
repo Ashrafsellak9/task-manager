@@ -109,4 +109,31 @@
     
     return $errors;
   }
+
+function validateDate($date, $format = 'Y-m-d') {
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+}
+
+function formatDate($date) {
+    if (empty($date)) {
+        return '';
+    }
+    return date('M j, Y', strtotime($date));
+}
+
+
+function getPriorityClass($priority) {
+    return 'priority-' . $priority;
+}
+
+
+function getStatusClass($status) {
+    return 'status-' . str_replace('_', '-', $status);
+}
+
+
+function formatStatus($status) {
+    return ucfirst(str_replace('_', ' ', $status));
+}
 ?>
